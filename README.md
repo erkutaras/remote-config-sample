@@ -1,2 +1,2 @@
 # remote-config-sample
-Sample Firebase Remote Config Android Project
+Firebase Remote Config Sample Android Project
