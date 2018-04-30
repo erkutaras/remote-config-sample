@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Remote Config Sample</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_default">Default</string>
+    <string name="title_fetched">Fetched</string>
+    <string name="info_message">This application is developed for simple implementation of Firebase
+        Remote Config. In this tab, you can find short description about the app, link of source
+        code and Medium Story, and my web site. On second tab, default values is shown, and on last
+        tab, you can see the values which is set according to your segmentation. With float action
+        button, you can refresh the values.
+    </string>
 </resources>
