@@ -9,4 +9,5 @@
         tab, you can see the values which is set according to your segmentation. With float action
         button, you can refresh the values.
     </string>
+    <string name="web_page_url">www.erkutaras.com</string>
 </resources>
