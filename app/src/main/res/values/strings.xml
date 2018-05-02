@@ -47,4 +47,5 @@
     <string name="magenta">magenta</string>
     <string name="red">red</string>
     <string name="white">white</string>
+    <string name="fetched_value">Fetched Value:</string>
 </resources>

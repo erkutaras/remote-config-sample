@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -22,15 +23,30 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by erkutaras on 2.05.2018.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    public static final String USER_PROPERTY_KEY = "favorite_color";
     private int cacheExpiration = 3600;
     private TextView mTextMessage;
     private TextView mTextStatus;
     private FrameLayout mContainer;
+
     private View mHomeView;
+
     private View mDefaultView;
     private RadioGroup mRadioGroup;
+    private RadioGroup mRadioGroup1;
+    private RadioGroup mRadioGroup2;
+
+    private View mFetchedView;
+    private TextView mMessageWelcome;
+    private TextView mRandomPercentile;
+    private TextView mFavoriteColor;
+    private TextView mColor;
+
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -41,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        initContent();
-        initFirebaseProducts();
+        initViews();
+        initRemoteConfig();
     }
 
-    private void initContent() {
+    private void initViews() {
         mContainer = findViewById(R.id.frameLayout);
         mTextMessage = findViewById(R.id.title);
         mTextStatus = findViewById(R.id.status);
@@ -54,20 +70,20 @@ public class MainActivity extends AppCompatActivity {
 
         mHomeView = getLayoutInflater().inflate(R.layout.view_home, mContainer, false);
         mContainer.addView(mHomeView);
-        mDefaultView = getLayoutInflater().inflate(R.layout.view_values, mContainer, false);
+
+        mDefaultView = getLayoutInflater().inflate(R.layout.view_default_values, mContainer, false);
         mRadioGroup = mDefaultView.findViewById(R.id.radioGroup);
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                mRadioGroup.clearCheck();
-                mFirebaseAnalytics.setUserProperty(
-                        "favorite_color",
-                        String.valueOf(group.findViewById(checkedId).getTag()));
-            }
-        });
+        mRadioGroup1 = mDefaultView.findViewById(R.id.radioGroup1);
+        mRadioGroup2 = mDefaultView.findViewById(R.id.radioGroup2);
+
+        mFetchedView = getLayoutInflater().inflate(R.layout.view_fetched_values, mContainer, false);
+        mMessageWelcome = mFetchedView.findViewById(R.id.tvMessageWelcome);
+        mRandomPercentile = mFetchedView.findViewById(R.id.tvRandomPercentile);
+        mFavoriteColor = mFetchedView.findViewById(R.id.tvFavoriteColor);
+        mColor = mFetchedView.findViewById(R.id.tvColor);
     }
 
-    private void initFirebaseProducts() {
+    private void initRemoteConfig() {
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
@@ -95,11 +111,20 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             mTextStatus.setText(R.string.message_fail);
                         }
+
+                        updateContentWithFetchedValues();
                     }
-
-
-
                 });
+    }
+
+    private void updateContentWithFetchedValues() {
+        mMessageWelcome.setText(mFirebaseRemoteConfig.getString("message_welcome"));
+        mRandomPercentile.setText(mFirebaseRemoteConfig.getString("random_percentile"));
+
+        String favoriteColor = mFirebaseRemoteConfig.getString("favorite_color");
+        mFavoriteColor.setText(favoriteColor);
+        mColor.setText(favoriteColor);
+        mColor.setBackgroundColor(mColorMap.get(favoriteColor));
     }
 
     public void onClickGitHub(View view) {
@@ -107,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickMedium(View view) {
-        openBrowser("https://medium.com/@erkutaras_45701");
+        openBrowser("https://medium.com/@erkutaras");
     }
 
     public void onClickWebPage(View view) {
@@ -116,6 +141,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void openBrowser(String url) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+    }
+
+    public void onClickColor(View view) {
+        mRadioGroup.clearCheck();
+        mRadioGroup1.clearCheck();
+        mRadioGroup2.clearCheck();
+        RadioButton radioButton = (RadioButton) view;
+        radioButton.setChecked(true);
+        mFirebaseAnalytics.setUserProperty(
+                USER_PROPERTY_KEY,
+                String.valueOf(radioButton.getTag()));
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -135,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_fetched);
+                    mContainer.addView(mFetchedView);
                     return true;
             }
             return false;
