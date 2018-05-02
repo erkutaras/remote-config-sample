@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
-        <key>key</key>
-        <value>value</value>
+        <key>message_welcome</key>
+        <value>Hello Remote Config! (default-xml)</value>
+    </entry>
+    <entry>
+        <key>random_percentile</key>
+        <value>You are within default segment of users. (default-xml)</value>
+    </entry>
+    <entry>
+        <key>favorite_color</key>
+        <value>white (default-xml)</value>
     </entry>
 </defaultsMap>

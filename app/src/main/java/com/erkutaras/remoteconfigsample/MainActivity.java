@@ -1,6 +1,7 @@
 package com.erkutaras.remoteconfigsample;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,15 +29,20 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextStatus;
     private FrameLayout mContainer;
     private View mHomeView;
+    private View mDefaultView;
+    private RadioGroup mRadioGroup;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         initContent();
-        initRemoteConfig();
+        initFirebaseProducts();
     }
 
     private void initContent() {
@@ -43,9 +54,20 @@ public class MainActivity extends AppCompatActivity {
 
         mHomeView = getLayoutInflater().inflate(R.layout.view_home, mContainer, false);
         mContainer.addView(mHomeView);
+        mDefaultView = getLayoutInflater().inflate(R.layout.view_values, mContainer, false);
+        mRadioGroup = mDefaultView.findViewById(R.id.radioGroup);
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                mRadioGroup.clearCheck();
+                mFirebaseAnalytics.setUserProperty(
+                        "favorite_color",
+                        String.valueOf(group.findViewById(checkedId).getTag()));
+            }
+        });
     }
 
-    private void initRemoteConfig() {
+    private void initFirebaseProducts() {
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
@@ -109,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_default);
+                    mContainer.addView(mDefaultView);
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_fetched);
@@ -117,4 +140,16 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private Map<String, Integer> mColorMap = new HashMap<String, Integer>() {{
+        put("black", Color.BLACK);
+        put("blue", Color.BLUE);
+        put("cyan", Color.CYAN);
+        put("yellow", Color.YELLOW);
+        put("gray", Color.GRAY);
+        put("green", Color.GREEN);
+        put("magenta", Color.MAGENTA);
+        put("red", Color.RED);
+        put("white", Color.WHITE);
+    }};
 }

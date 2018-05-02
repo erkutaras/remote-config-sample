@@ -6,11 +6,45 @@
     <string name="info_message">This application is developed for simple implementation of Firebase
         Remote Config. \n\nIn this tab, you can find short description about the app, link of source
         code and Medium Story, and my web site. On second tab, default values is shown, and on last
-        tab, you can see the values which is set according to your segmentation. \n\nWith float action
-        button, you can refresh the values.
+        tab, you can see the values which is set according to your segmentation. \n\nWith float
+        action
+        button, you can fetch the values.
     </string>
     <string name="web_page_url">www.erkutaras.com</string>
     <string name="message_fetch">FETCHING… :|</string>
     <string name="message_success">FETCH SUCCEEDED! :)</string>
     <string name="message_fail">FETCH FAILED! :(</string>
+    <string name="message_welcome">message_welcome</string>
+    <string name="default_value">Default value:</string>
+    <string name="message_welcome_description">This value changes according to device language, and
+        can be nine different values with default value. You can change fetched value with changing
+        your device language. Supported languages are: <i>English(en),
+            Turkish(tr), German(de), Spanish(es), Russian(ru), Italian(it), Serbian(sr),
+            Estonian(et)</i>.
+    </string>
+    <string name="message_welcome_value">Hello Remote Config! (default-xml)</string>
+    <string name="random_percentile">random_percentile</string>
+    <string name="random_percentile_description">This value changes according to what your randomly
+        percentile is within the users, and can be eleven different values with default value.
+        Randomly selection is divided with 10% of the all users.
+    </string>
+    <string name="random_percentile_value">You are within default segment of users. (default-xml)
+    </string>
+    <string name="favorite_color">favorite_color</string>
+    <string name="favorite_color_description">This value changes according to your selected choice
+        via <b>User Property</b> value of Google Analytics for Firebase. When you select any option,
+        your user property value is updated. According to this value, on Fetched Tab, you can see
+        new color after you fetch values with FAB.
+    </string>
+    <string name="favorite_color_value">white (default-xml)</string>
+    <string name="select_a_color">Select a color:</string>
+    <string name="black">black</string>
+    <string name="blue">blue</string>
+    <string name="cyan">cyan</string>
+    <string name="yellow">yellow</string>
+    <string name="gray">gray</string>
+    <string name="green">green</string>
+    <string name="magenta">magenta</string>
+    <string name="red">red</string>
+    <string name="white">white</string>
 </resources>

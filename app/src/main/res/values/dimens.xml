@@ -3,6 +3,8 @@
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="activity_inner_margin">8dp</dimen>
     <dimen name="activity_padding">4dp</dimen>
+    <dimen name="activity_padding_8">8dp</dimen>
     <dimen name="activity_padding_12">12dp</dimen>
+    <dimen name="activity_padding_16">16dp</dimen>
     <dimen name="button_height">52dp</dimen>
 </resources>
