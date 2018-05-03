@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickMedium(View view) {
-        openBrowser("https://medium.com/@erkutaras");
+        openBrowser("https://medium.com/@7340a0b75d12/3d3bcd26494a");
     }
 
     public void onClickWebPage(View view) {
