@@ -7,4 +7,4 @@ The project is developed as three tabs. In first tab, you can find short descrip
 
 Sample application apk file: [remote-config-sample.apk](http://www.erkutaras.com/downloads/apk/remote-config-sample.apk)
 
-[Exploring Firebase Remote Config](https://medium.com/@erkutaras) on Medium (not published just for now)
+[Exploring Firebase Remote Config](https://medium.com/@7340a0b75d12/3d3bcd26494a) on Medium
